@@ -1,0 +1,5 @@
+Nginx_1.17_vhost.conf
+composer.lock
+/logs/workerReceive.log
+/vendor
+/.idea
