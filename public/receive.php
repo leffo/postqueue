@@ -1,8 +1,7 @@
 <?php
 
 use AYakovlev\core\Receiver\Listen;
-use AYakovlev\core\Receiver\Process;
-use AYakovlev\core\WorkerReceiver;
+use AYakovlev\core\Receiver\WorkerReceiver;
 
 require_once('../vendor/autoload.php');
 

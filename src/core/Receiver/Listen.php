@@ -4,17 +4,25 @@
 namespace AYakovlev\core\Receiver;
 
 
-use AYakovlev\core\WorkerReceiver;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
 class Listen
 {
     private WorkerReceiver $workerReceiver;
+    private array $bunny;
+    private AMQPStreamConnection $connection;
 
     public function __construct(WorkerReceiver $workerReceiver)
     {
         $this->workerReceiver = $workerReceiver;
+        $this->bunny = (require '../../../config/settings.php')['rabbitmq'];
+        $this->connection = new AMQPStreamConnection(
+            $this->bunny['host'],
+            $this->bunny['port'],
+            $this->bunny['user'],
+            $this->bunny['password']
+        );
     }
 
     /**
@@ -33,8 +41,7 @@ class Listen
     {
         $this->workerReceiver->getLog()->info('Begin listen routine');
 
-        $connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
-        $channel = $connection->channel();
+        $channel = $this->connection->channel();
 
         $channel->queue_declare(
             'invoice_queue',
@@ -68,6 +75,6 @@ class Listen
         }
 
         $channel->close();
-        $connection->close();
+        $this->connection->close();
     }
 }
