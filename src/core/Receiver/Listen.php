@@ -16,7 +16,7 @@ class Listen
     public function __construct(WorkerReceiver $workerReceiver)
     {
         $this->workerReceiver = $workerReceiver;
-        $this->bunny = (require '../../../config/settings.php')['rabbitmq'];
+        $this->bunny = (require __DIR__ . '/../../../config/settings.php')['rabbitmq'];
         $this->connection = new AMQPStreamConnection(
             $this->bunny['host'],
             $this->bunny['port'],
@@ -32,7 +32,7 @@ class Listen
     {
         $this->workerReceiver->getLog()->info('Received message: ' . $msg->body);
 
-        $this->workerReceiver->sendEmail();
+        $this->workerReceiver->generatePdf()->sendEmail();
 
         $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
     }
@@ -64,7 +64,7 @@ class Listen
             false,
             false,
             false,
-            [$this, 'process']
+            array($this, 'process')
         );
 
         $this->workerReceiver->getLog()->info('Consuming from queue');

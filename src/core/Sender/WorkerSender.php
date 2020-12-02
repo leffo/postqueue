@@ -11,7 +11,7 @@ class WorkerSender
     private AMQPStreamConnection $connection;
     public function __construct()
     {
-        $this->bunny = (require '../../../config/settings.php')['rabbitmq'];
+        $this->bunny = (require __DIR__ . '/../../../config/settings.php')['rabbitmq'];
         $this->connection = new AMQPStreamConnection(
             $this->bunny['host'],
             $this->bunny['port'],

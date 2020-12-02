@@ -17,13 +17,13 @@ class WorkerReceiver
     public function __construct()
     {
         $this->log = new Logger('workerReceive');
-        $this->log->pushHandler(new StreamHandler('../logs/workerReceive.log', Logger::INFO));
+        $this->log->pushHandler(new StreamHandler(__DIR__ . '/../../../logs/workerReceive.log', Logger::INFO));
     }
 
     /**
      * @return WorkerReceiver
      */
-    protected function generatePdf(): WorkerReceiver
+    public function generatePdf(): WorkerReceiver
     {
         $this->log->info('Generating PDF...');
         sleep(mt_rand(2, 5));
