@@ -37,7 +37,7 @@ class WorkerSender
 
         $msg = new AMQPMessage(
             $invoiceNum,
-            array('delivery_mode' => 2)  // сообщение постоянное
+            ['delivery_mode' => 2]  // сообщение постоянное
         );
 
         $channel->basic_publish(

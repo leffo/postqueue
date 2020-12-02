@@ -5,9 +5,7 @@ use AYakovlev\core\Sender\WorkerSender;
 
 if ($_POST) {
     if (!empty($_POST['invoiceNo'])) {
-        $inputFilters = array(
-            'invoiceNo' => FILTER_SANITIZE_NUMBER_INT,
-        );
+        $inputFilters = ['invoiceNo' => FILTER_SANITIZE_NUMBER_INT];
         $input = filter_input_array(INPUT_POST, $inputFilters);
         $sender = new WorkerSender();
         try {

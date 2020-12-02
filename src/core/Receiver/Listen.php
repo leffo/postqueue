@@ -64,7 +64,7 @@ class Listen
             false,
             false,
             false,
-            array($this, 'process')
+            [$this, 'process']
         );
 
         $this->workerReceiver->getLog()->info('Consuming from queue');
