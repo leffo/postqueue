@@ -2,7 +2,7 @@
 
 ## Получаем и запускаем rabbitmq+management
 
-```php
+```
 docker pull rabbitmq:3-management
 
 docker run -d -p 15672:15672 -p 5672:5672 --name rabbit-docker rabbitmq:3-management
@@ -14,7 +14,7 @@ docker run -d -p 15672:15672 -p 5672:5672 --name rabbit-docker rabbitmq:3-manage
 
 ## Запускаем в консолях небходимое количество воркеров
 
-```php
+```
 php receive.php & 
 ```
 Получаем вывод об обработке сообщений в консоли.
