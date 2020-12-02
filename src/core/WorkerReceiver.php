@@ -17,7 +17,7 @@ class WorkerReceiver
     public function __construct()
     {
         $this->log = new Logger('workerReceive');
-        $this->log->pushHandler(new StreamHandler(__DIR__ . '../../logs/workerReceive.log', Logger::INFO));
+        $this->log->pushHandler(new StreamHandler('../../logs/workerReceive.log', Logger::INFO));
     }
 
     /**
