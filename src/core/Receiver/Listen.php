@@ -30,10 +30,12 @@ class Listen
      */
     public function process(AMQPMessage $msg): void
     {
-        $this->workerReceiver->getLog()->info('Received message: ' . $msg->body);
+        $message = 'Received message No. ' . $msg->body;
+        $this->workerReceiver->getLog()->info($message);
+        echo "-----\n";
+        echo $message . "\n";
 
         $this->workerReceiver->generatePdf()->sendEmail();
-
         $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
     }
 
