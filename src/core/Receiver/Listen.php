@@ -36,7 +36,9 @@ class Listen
         echo $message . "\n";
 
         $this->workerReceiver->generatePdf()->sendEmail();
+        echo "Message No. {$msg->body} processed.\n";
         $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
+
     }
 
     public function listen()
