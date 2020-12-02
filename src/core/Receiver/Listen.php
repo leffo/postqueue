@@ -6,6 +6,7 @@ namespace AYakovlev\core\Receiver;
 
 use AYakovlev\core\WorkerReceiver;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
 
 class Listen
 {
@@ -14,6 +15,18 @@ class Listen
     public function __construct(WorkerReceiver $workerReceiver)
     {
         $this->workerReceiver = $workerReceiver;
+    }
+
+    /**
+     * @param AMQPMessage $msg
+     */
+    public function process(AMQPMessage $msg): void
+    {
+        $this->workerReceiver->getLog()->info('Received message: ' . $msg->body);
+
+        $this->workerReceiver->sendEmail();
+
+        $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
     }
 
     public function listen()
@@ -44,7 +57,7 @@ class Listen
             false,
             false,
             false,
-            [$this->workerReceiver, 'process']
+            array($this, 'process')
         );
 
         $this->workerReceiver->getLog()->info('Consuming from queue');
